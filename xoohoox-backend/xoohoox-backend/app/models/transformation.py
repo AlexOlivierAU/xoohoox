@@ -40,8 +40,8 @@ class TransformationStage(Base):
     batch_id = Column(Integer, ForeignKey("batch_tracking.batch_id"))
     stage_number = Column(Integer, nullable=False)
     stage_name = Column(String, nullable=False)
-    stage_type = Column(Enum(TransformationType), nullable=False)
-    status = Column(Enum(BatchStatus), nullable=False)
+    stage_type = Column(SQLEnum(TransformationType), nullable=False)
+    status = Column(SQLEnum(BatchStatus), nullable=False)
     total_trials = Column(Integer, nullable=False, default=1)  # Total number of trials for this stage
     trials_to_proceed = Column(Integer, nullable=True)  # Number of trials that should proceed to next stage
     parent_stage_id = Column(Integer, ForeignKey("transformation_stages.id"), nullable=True)  # For linking upscale stages
@@ -72,7 +72,7 @@ class JuicingResults(Base):
     stage_id = Column(Integer, ForeignKey("transformation_stages.id"))
     
     # Juice processing variant
-    juice_processing_type = Column(Enum(JuiceProcessingType), nullable=False)
+    juice_processing_type = Column(SQLEnum(JuiceProcessingType), nullable=False)
     is_raw_juice_ferment = Column(Boolean, default=False)  # For JP1 (one-time only rule)
     
     # Input measurements

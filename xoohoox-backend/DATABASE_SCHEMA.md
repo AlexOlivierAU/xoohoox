@@ -1,133 +1,323 @@
-# Xoohoox Fermentation & Distillation Management System - Database Schema
+# Xoohoox Fermentation & Distillation Management System - Complete Database Schema
 
-## Tables and Relationships
+## 🎯 **Current Status: COMPLETE** 
+- **Database**: PostgreSQL 14
+- **Tables**: 41
+- **Total Fields**: 553
+- **Enum Types**: 14
+- **Status**: ✅ Production Ready
 
+## 📊 **Database Overview**
+
+### **Core Production Tables**
 ```
 +-------------------+       +-------------------+       +-------------------+
-|   BatchTracking   |       |  JuicingInputLog  |       |  QualityControl   |
+|   BatchTracking   |       |  BatchDispatches  |       |  FermentationTrials |
 +-------------------+       +-------------------+       +-------------------+
-| id                |       | id                |       | id                |
-| batch_id          |<------| batch_id          |       | test_id           |
-| arrival_date      |       | log_id            |       | batch_id          |<----+
-| fruit_type        |       | timestamp         |       | test_type         |     |
-| supplier_name     |       | operator_id       |       | test_date         |     |
-| supplier_batch_id |       | equipment_id      |       | test_name         |     |
-| quantity_kg       |       | input_quantity_kg |       | test_method       |     |
-| quality_grade     |       | output_quantity_kg|       | test_parameters   |     |
-| storage_location  |       | process_status    |       | expected_range_min|     |
-| storage_conditions|       | notes             |       | expected_range_max|     |
-| initial_notes     |       +-------------------+       | actual_value      |     |
-| status            |                                   | unit_of_measure   |     |
-| processing_start_date|                               | result            |     |
-| processing_end_date  |                               | tester_id         |     |
-| final_product_type  |                               | equipment_used    |     |
-| final_product_quantity|                             | temperature_c     |     |
-| quality_issues      |                               | humidity_percent  |     |
-+-------------------+                                 | notes             |     |
-        |                                             | corrective_actions|     |
-        |                                             | retest_required   |     |
-        |                                             +-------------------+     |
-        |                                                                       |
-        |                                                                       |
-        v                                                                       |
+| id (PK)           |       | id (PK)           |       | id (PK)           |
+| batch_id (UK)     |       | batch_id (UK)     |       | trial_id (UK)     |
+| name              |       | grower_id         |       | batch_id (FK)     |
+| fruit_type (ENUM) |       | produce_type      |       | yeast_strain      |
+| process_type      |       | varietal          |       | juice_variant     |
+| grower_id         |       | dispatch_date     |       | initial_volume    |
+| status            |       | quantity_kg       |       | sg                |
+| stage             |       +-------------------+       | ph                |
+| progress          |                                   | brix              |
+| start_date        |                                   | current_abv       |
+| end_date          |                                   | path_taken        |
+| quality_checks    |                                   | status            |
+| maintenance_records|                                  | daily_readings    |
+| environmental_impact|                                 | upscale_history   |
+| processing_start_date|                               | compound_results  |
+| processing_end_date|                                 +-------------------+
+| final_product_quantity|                                       |
+| production_date   |                                           |
+| recipe_id         |                                           |
+| ingredients       |                                           |
+| juice_type (ENUM) |                                           |
+| target_quantity   |                                           |
+| actual_quantity   |                                           |
+| completion_date   |                                           |
+| quality_grade     |                                           |
+| actual_ingredients|                                           |
+| temperature       |                                           |
+| ph_level          |                                           |
+| brix              |                                           |
+| processing_time   |                                           |
+| issues            |                                           |
+| corrective_actions|                                           |
+| created_by        |                                           |
+| updated_by        |                                           |
+| created_at        |                                           |
+| updated_at        |                                           |
++-------------------+                                           |
+        |                                                       |
+        |                                                       |
+        v                                                       |
++-------------------+       +-------------------+               |
+|TransformationStages|       |  UpscaleRuns     |               |
++-------------------+       +-------------------+               |
+| id (PK)           |       | id (PK)           |               |
+| batch_id          |       | upscale_id (UK)   |               |
+| stage_number      |       | trial_id (FK)     |               |
+| stage_name        |       | stage (ENUM)      |               |
+| stage_type (ENUM) |       | volume            |               |
+| status (ENUM)     |       | yield_amount      |               |
+| total_trials      |       | abv_result        |               |
+| trials_to_proceed |       | compound_summary  |               |
+| parent_stage_id   |       | status (ENUM)     |               |
+| upscale_factor    |       | timestamp         |               |
+| target_volume     |       +-------------------+               |
+| planned_duration_days|                                       |
+| actual_duration_days|                                        |
+| branching_rule    |                                           |
+| created_at        |                                           |
+| updated_at        |                                           |
++-------------------+                                           |
+        |                                                       |
+        |                                                       |
+        v                                                       |
++-------------------+       +-------------------+               |
+|  JuicingResults   |       |  QualityControl   |               |
++-------------------+       +-------------------+               |
+| id (PK)           |       | id (PK)           |               |
+| stage_id (FK)     |       | test_id (UK)      |               |
+| juice_processing_type|    | batch_id (FK)     |               |
+| is_raw_juice_ferment|     | test_type         |               |
+| input_weight      |       | test_date         |               |
+| fruit_condition   |       | test_name         |               |
+| juice_volume      |       | test_method       |               |
+| juice_yield       |       | test_parameters   |               |
+| juice_yield_per_gram|     | expected_range_min|               |
+| brix              |       | expected_range_max|               |
+| ph                |       | actual_value      |               |
+| temperature       |       | unit_of_measure   |               |
+| press_pressure    |       | result            |               |
+| press_time        |       | tester_id         |               |
+| maceration_time   |       | equipment_used    |               |
+| extraction_method |       | temperature_c     |               |
+| notes             |       | humidity_percent  |               |
+| created_at        |       | notes             |               |
+| updated_at        |       | corrective_actions|               |
++-------------------+       | retest_required   |               |
+                            | created_at        |               |
+                            | updated_at        |               |
+                            +-------------------+               |
+```
+
+### **Process & Results Tables**
+```
 +-------------------+       +-------------------+       +-------------------+
-|EquipmentMaintenance|       |InventoryManagement|       |     Users         |
+|ChemistryResults   |       |HeatActivationResults|     |FermentationResults|
 +-------------------+       +-------------------+       +-------------------+
-| id                |       | id                |       | id                |
-| maintenance_id    |       | item_id           |       | username          |
-| equipment_id      |       | item_name         |       | email             |
-| equipment_type    |       | item_type         |       | hashed_password   |
-| equipment_name    |       | description       |       | full_name         |
-| manufacturer      |       | sku               |       | is_active         |
-| model_number      |       | barcode           |       | is_superuser      |
-| serial_number     |       | unit_of_measure   |       | created_at        |
-| installation_date |       | quantity_in_stock |       | updated_at        |
-| maintenance_type  |       | minimum_stock_level|      +-------------------+
-| maintenance_status|       | reorder_point     |
-| scheduled_date    |       | maximum_stock_level|
-| actual_date       |       | storage_location  |
-| technician_id     |       | storage_condition |
-| cost              |       | status            |
-| parts_replaced    |       | supplier_id       |
-| work_performed    |       | supplier_name     |
-| results           |       | unit_cost         |
-| next_maintenance_date|    | last_ordered_date |
-| requires_shutdown |       | last_received_date|
-| shutdown_duration_hours|  | expiry_date       |
-| notes             |       | lot_number        |
-| is_critical       |       | is_active         |
-+-------------------+       | notes             |
-                            | total_received    |
-                            | total_issued      |
-                            | total_adjusted    |
-                            | last_count_date   |
-                            | last_count_quantity|
+| id (PK)           |       | id (PK)           |       | id (PK)           |
+| stage_id (FK)     |       | stage_id (FK)     |       | stage_id (FK)     |
+| ph_initial        |       | heating_method    |       | initial_gravity   |
+| ph_adjusted       |       | target_temperature|       | final_gravity     |
+| titratable_acidity|       | actual_temperature|       | abv               |
+| sulfite_addition  |       | heating_duration  |       | temperature       |
+| nutrient_addition |       | cooling_method    |       | ph                |
+| enzyme_addition   |       | final_temperature |       | notes             |
+| clarification_agent|      | post_heat_ph      |       | created_at        |
+| clarification_amount|     | clarity_improvement|      | updated_at        |
+| notes             |       | notes             |       +-------------------+
+| created_at        |       | created_at        |
+| updated_at        |       | updated_at        |
++-------------------+       +-------------------+
+```
+
+### **Equipment & Maintenance Tables**
+```
++-------------------+       +-------------------+       +-------------------+
+|Equipment          |       |EquipmentMaintenance|      |MaintenanceLog     |
++-------------------+       +-------------------+       +-------------------+
+| id (PK)           |       | id (PK)           |       | id (PK)           |
+| equipment_id (UK) |       | maintenance_id(UK)|       | equipment_id      |
+| name              |       | equipment_id      |       | maintenance_date  |
+| type              |       | equipment_type    |       | maintenance_type  |
+| manufacturer      |       | equipment_name    |       | performed_by      |
+| model             |       | manufacturer      |       | description       |
+| serial_number     |       | model_number      |       | cost              |
+| purchase_date     |       | serial_number     |       | next_maintenance_date|
+| warranty_expiry   |       | installation_date |       | notes             |
+| status            |       | maintenance_type  |       | created_at        |
+| location          |       | maintenance_status|       | updated_at        |
+| notes             |       | scheduled_date    |       +-------------------+
+| created_at        |       | actual_date       |
+| updated_at        |       | technician_id     |
++-------------------+       | cost              |
+                            | parts_replaced    |
+                            | work_performed    |
+                            | results           |
+                            | next_maintenance_date|
+                            | requires_shutdown |
+                            | shutdown_duration_hours|
+                            | notes             |
+                            | is_critical       |
+                            | created_at        |
+                            | updated_at        |
                             +-------------------+
 ```
 
-## Relationships
+### **Inventory & Management Tables**
+```
++-------------------+       +-------------------+       +-------------------+
+|InventoryManagement|       |Users              |       |Farms              |
++-------------------+       +-------------------+       +-------------------+
+| id (PK)           |       | id (PK)           |       | id (PK)           |
+| item_id (UK)      |       | email (UK)        |       | name              |
+| item_name         |       | username (UK)     |       | location          |
+| item_type (ENUM)  |       | hashed_password   |       | contact_info      |
+| description       |       | full_name         |       | notes             |
+| sku (UK)          |       | is_active         |       | created_at        |
+| barcode (UK)      |       | is_superuser      |       | updated_at        |
+| unit_of_measure   |       | created_at        |       +-------------------+
+| quantity_in_stock |       | updated_at        |
+| minimum_stock_level|      +-------------------+
+| reorder_point     |
+| maximum_stock_level|
+| storage_location  |
+| storage_condition (ENUM)|
+| status (ENUM)     |
+| supplier_id       |
+| supplier_name     |
+| unit_cost         |
+| last_ordered_date |
+| last_received_date|
+| expiry_date       |
+| lot_number        |
+| is_active         |
+| notes             |
+| total_received    |
+| total_issued      |
+| total_adjusted    |
+| last_count_date   |
+| last_count_quantity|
+| created_at        |
+| updated_at        |
++-------------------+
+```
 
-1. **BatchTracking** has many **JuicingInputLog** entries (one-to-many)
-   - A batch can have multiple juicing logs
-   - Each juicing log belongs to one batch
+## 🔗 **Key Relationships**
 
-2. **BatchTracking** has many **QualityControl** tests (one-to-many)
-   - A batch can have multiple quality tests
-   - Each quality test belongs to one batch
+### **Primary Relationships**
+1. **BatchTracking** → **JuicingInputLog** (one-to-many)
+2. **BatchTracking** → **QualityControl** (one-to-many)
+3. **BatchTracking** → **TransformationStages** (one-to-many)
+4. **FermentationTrials** → **UpscaleRuns** (one-to-many)
+5. **TransformationStages** → **JuicingResults** (one-to-many)
+6. **TransformationStages** → **ChemistryResults** (one-to-many)
+7. **TransformationStages** → **HeatActivationResults** (one-to-many)
+8. **TransformationStages** → **FermentationResults** (one-to-many)
+9. **TransformationStages** → **VinegarResults** (one-to-many)
+10. **TransformationStages** → **DistillationResults** (one-to-many)
+11. **TransformationStages** → **Stage2Results** (one-to-many)
+12. **TransformationStages** → **FruitPerformance** (one-to-many)
 
-3. **EquipmentMaintenance** is independent
-   - No direct relationships with other tables
+### **Equipment Relationships**
+1. **Equipment** → **EquipmentMaintenance** (one-to-many)
+2. **Equipment** → **MaintenanceLog** (one-to-many)
 
-4. **InventoryManagement** is independent
-   - No direct relationships with other tables
+## 📋 **Complete Table List (41 Tables)**
 
-## Key Fields
+### **Core Production (8 tables)**
+- `batch_tracking` (36 fields) - Main batch management
+- `batch_dispatches` (7 fields) - Batch dispatch information
+- `batch` (6 fields) - Basic batch records
+- `fermentation_trials` (17 fields) - Fermentation experiments
+- `upscale_runs` (10 fields) - Production scaling
+- `transformation_stages` (16 fields) - Production stages
+- `juicing_input_log` (12 fields) - Input logging
+- `juicing_input_log_detailed` (14 fields) - Detailed input logging
 
-1. **BatchTracking**
-   - `batch_id`: Unique identifier for each batch
-   - `status`: Current status of the batch (RECEIVED, IN_STORAGE, IN_PROCESSING, COMPLETED, REJECTED)
+### **Process Results (12 tables)**
+- `juicing_results` (19 fields) - Juicing process results
+- `juicing_results_detailed` (10 fields) - Detailed juicing results
+- `chemistry_results` (13 fields) - Chemistry analysis
+- `heat_activation_results` (13 fields) - Heat treatment results
+- `fermentation_results` (10 fields) - Fermentation outcomes
+- `fermentation_results_detailed` (14 fields) - Detailed fermentation results
+- `vinegar_results` (15 fields) - Vinegar production
+- `vinegar_kinetics` (15 fields) - Vinegar kinetics
+- `distillation_results` (14 fields) - Distillation outcomes
+- `distillation_results_detailed` (18 fields) - Detailed distillation results
+- `stage2_results` (15 fields) - Secondary processing
+- `fruit_performance` (15 fields) - Fruit quality tracking
 
-2. **JuicingInputLog**
-   - `log_id`: Unique identifier for each log entry
-   - `batch_id`: Reference to the batch
-   - `process_status`: Current status of the juicing process
+### **Quality & Evaluation (6 tables)**
+- `quality_control` (22 fields) - Quality testing
+- `produce_prelim_eval` (17 fields) - Produce evaluation
+- `product_evaluation` (11 fields) - Product evaluation
+- `sensory_feedback` (13 fields) - Sensory feedback
+- `evaluations` (9 fields) - General evaluations
+- `failure_reports` (11 fields) - Process failures
 
-3. **QualityControl**
-   - `test_id`: Unique identifier for each test
-   - `batch_id`: Reference to the batch
-   - `result`: Result of the test (PASS, FAIL, PENDING, INCONCLUSIVE)
+### **Equipment & Maintenance (3 tables)**
+- `equipment` (14 fields) - Equipment records
+- `equipment_maintenance` (25 fields) - Maintenance tracking
+- `maintenance_log` (11 fields) - Maintenance logs
 
-4. **EquipmentMaintenance**
-   - `maintenance_id`: Unique identifier for each maintenance record
-   - `equipment_id`: Unique identifier for the equipment
-   - `maintenance_status`: Current status of the maintenance
+### **Inventory & Management (3 tables)**
+- `inventory_management` (31 fields) - Stock tracking
+- `users` (9 fields) - User management
+- `farms` (7 fields) - Farm information
 
-5. **InventoryManagement**
-   - `item_id`: Unique identifier for each inventory item
-   - `status`: Current status of the inventory item
-   - `quantity_in_stock`: Current quantity in stock
+### **Planning & Kinetics (6 tables)**
+- `fermentation_plan` (14 fields) - Fermentation planning
+- `fermentation_kinetics` (10 fields) - Fermentation kinetics
+- `liquefaction_method` (10 fields) - Liquefaction methods
+- `liquefaction_plan` (12 fields) - Liquefaction planning
+- `liquefaction_runs` (12 fields) - Liquefaction runs
+- `yeast_strains` (8 fields) - Yeast data
 
-## Enums
+### **Logs & Tracking (3 tables)**
+- `fermentation_logs` (9 fields) - Fermentation tracking
+- `juicing_logs` (8 fields) - Juicing logs
+- `alembic_version` (1 field) - Migration tracking
 
-1. **BatchTracking**
-   - `FruitType`: ORANGE, APPLE, GRAPE, PINEAPPLE, MANGO, OTHER
-   - `QualityGrade`: A, B, C, REJECTED
-   - `FinalProductType`: JUICE, CONCENTRATE, PUREE, DISTILLATE, VINEGAR, OTHER
-   - `BatchStatus`: RECEIVED, IN_STORAGE, IN_PROCESSING, COMPLETED, REJECTED
+## 🎯 **Enum Types (14 Types)**
 
-2. **JuicingInputLog**
-   - `ProcessStatus`: STARTED, IN_PROGRESS, COMPLETED, PAUSED, FAILED
+1. **fruittype** - APPLE, PEAR, GRAPE, MIXED, OTHER
+2. **batchstatus** - PLANNED, IN_PROGRESS, COMPLETED, CANCELLED, FAILED
+3. **qualitygrade** - A, B, C, REJECT
+4. **juicetype** - APPLE, PEAR, GRAPE, MIXED
+5. **processstatus** - PLANNED, IN_PROGRESS, COMPLETED, FAILED
+6. **transformationtype** - CHEMISTRY_PREP, HEAT_ACTIVATION, INITIAL_FERMENTATION, UPSCALE_FERMENTATION, VINEGAR_PROCESSING, DISTILLATION, STAGE_2_PROCESSING, DRYING, COMPOSTING, MARKET_SALE, OTHER
+7. **juiceprocessingtype** - JP1, JP2, JP3, JP4, JP5
+8. **pathtaken** - vinegar, distillation, archived
+9. **juicevariant** - JP1, JP2, JP3, JP4, JP5
+10. **upscalestage** - Test 4, Test 5, Test 6
+11. **upscalestatus** - pending, complete, failed
+12. **itemtype** - RAW_MATERIAL, PACKAGING, CHEMICAL, EQUIPMENT, CONSUMABLE
+13. **storagecondition** - AMBIENT, REFRIGERATED, FROZEN, CONTROLLED
+14. **inventorystatus** - ACTIVE, INACTIVE, DISCONTINUED
 
-3. **QualityControl**
-   - `TestType`: MICROBIAL, CHEMICAL, PHYSICAL, SENSORY, COMPOUND, OTHER
-   - `TestResult`: PASS, FAIL, PENDING, INCONCLUSIVE
+## 🚀 **Database Statistics**
 
-4. **EquipmentMaintenance**
-   - `MaintenanceType`: PREVENTIVE, CORRECTIVE, CALIBRATION, INSPECTION, CLEANING
-   - `MaintenanceStatus`: SCHEDULED, IN_PROGRESS, COMPLETED, DELAYED, CANCELLED
-   - `EquipmentType`: JUICER, FERMENTER, DISTILLER, FILTER, PUMP, TANK, SENSOR, OTHER
+- **Total Tables**: 41
+- **Total Fields**: 553
+- **Enum Types**: 14
+- **Indexes**: 28 (for performance)
+- **Foreign Keys**: 15 (for data integrity)
+- **Sequences**: 41 (for auto-increment)
 
-5. **InventoryManagement**
-   - `ItemType`: RAW_MATERIAL, PACKAGING, FINISHED_PRODUCT, CLEANING_SUPPLY, SPARE_PART, OTHER
-   - `StorageCondition`: AMBIENT, REFRIGERATED, FROZEN, CONTROLLED
-   - `InventoryStatus`: IN_STOCK, LOW_STOCK, OUT_OF_STOCK, EXPIRED, RESERVED, DISCONTINUED 
+## ✅ **Verification Commands**
+
+```bash
+# Check total counts
+psql postgresql://postgres:postgres@localhost:5432/xoohoox -c "SELECT 'Tables: ' || COUNT(*)::text FROM information_schema.tables WHERE table_schema = 'public';"
+psql postgresql://postgres:postgres@localhost:5432/xoohoox -c "SELECT 'Fields: ' || COUNT(*)::text FROM information_schema.columns WHERE table_schema = 'public';"
+
+# List all tables
+psql postgresql://postgres:postgres@localhost:5432/xoohoox -c "\dt"
+
+# View table structure
+psql postgresql://postgres:postgres@localhost:5432/xoohoox -c "\d table_name"
+
+# List enum types
+psql postgresql://postgres:postgres@localhost:5432/xoohoox -c "\dT+"
+```
+
+## 🎉 **Status: PRODUCTION READY**
+
+The database schema is now complete and ready for the XooHooX juice production management system. All 553 fields across 41 tables are properly structured with relationships, indexes, and data integrity constraints. 

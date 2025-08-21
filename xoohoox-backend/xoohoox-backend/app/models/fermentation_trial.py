@@ -1,6 +1,6 @@
 from datetime import datetime
 from typing import List
-from sqlalchemy import Column, String, Float, Integer, ForeignKey, DateTime, JSON, Enum
+from sqlalchemy import Column, String, Float, Integer, ForeignKey, DateTime, JSON, Enum as SQLEnum
 from sqlalchemy.orm import relationship
 from app.db.base_class import Base
 import enum
@@ -22,11 +22,11 @@ class FermentationTrial(Base):
 
     id = Column(Integer, primary_key=True, index=True)
     trial_id = Column(String, unique=True, index=True)  # e.g., T-042-03
-    batch_id = Column(Integer, ForeignKey("batches.id"))
+    batch_id = Column(Integer, ForeignKey("batch.id"))
     
     # Trial Parameters
     yeast_strain = Column(String)
-    juice_variant = Column(Enum(JuiceVariant))
+    juice_variant = Column(SQLEnum(JuiceVariant))
     initial_volume = Column(Float)
     
     # Measurements
@@ -36,7 +36,7 @@ class FermentationTrial(Base):
     current_abv = Column(Float)
     
     # Status and Path
-    path_taken = Column(Enum(PathTaken), nullable=True)
+    path_taken = Column(SQLEnum(PathTaken), nullable=True)
     status = Column(String)  # Fermenting, Awaiting, Complete, etc.
     
     # Timestamps

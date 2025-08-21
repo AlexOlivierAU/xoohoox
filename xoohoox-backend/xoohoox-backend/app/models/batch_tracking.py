@@ -1,17 +1,18 @@
 from datetime import datetime
 from typing import Optional
-from sqlalchemy import Column, Integer, String, DateTime, Float, ForeignKey, Enum, JSON
+from sqlalchemy import Column, Integer, String, DateTime, Float, ForeignKey, Enum as SQLEnum, JSON
 from sqlalchemy.orm import relationship
 
-from app.models.base import BaseModel
+from app.db.base_class import Base
 from app.models.enums import FruitType, ProcessStatus
 
-class BatchTracking(BaseModel):
+class BatchTracking(Base):
     __tablename__ = "batch_tracking"
 
+    id = Column(Integer, primary_key=True, index=True)
     batch_id = Column(String, unique=True, index=True, nullable=False)
     name = Column(String, nullable=False)
-    fruit_type = Column(Enum(FruitType), nullable=False)
+    fruit_type = Column(SQLEnum(FruitType), nullable=False)
     process_type = Column(String, nullable=False)
     grower_id = Column(String, nullable=True)
     status = Column(String, nullable=False, default="planned")
