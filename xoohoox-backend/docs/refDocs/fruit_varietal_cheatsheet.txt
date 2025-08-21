@@ -1,0 +1,5 @@
+🍇 Fruit ID → Fruit Name
+1.0: Lemon
+
+🌱 Varietal ID → Varietal Name
+1.01: Eureka

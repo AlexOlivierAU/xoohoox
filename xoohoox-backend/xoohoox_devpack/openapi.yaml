@@ -1,0 +1,38 @@
+openapi: 3.0.0
+info:
+  title: XooHooX API
+  version: "1.0"
+paths:
+  /api/batch/dispatch:
+    post:
+      summary: Create a new produce batch
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: './batch.json'
+      responses:
+        '200':
+          description: Batch created
+  /api/evaluation/submit:
+    post:
+      summary: Submit a new evaluation
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: './evaluation.json'
+      responses:
+        '200':
+          description: Evaluation submitted
+  /api/yeast/add:
+    post:
+      summary: Add a new yeast strain
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: './yeast.json'
+      responses:
+        '200':
+          description: Yeast added

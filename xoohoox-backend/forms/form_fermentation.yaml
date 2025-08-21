@@ -1,0 +1,51 @@
+form:
+  name: fermentation_setup
+  fields:
+  - name: grower
+    type: text
+    label: Grower Participant Name
+    required: true
+  - name: produce
+    type: text
+    label: Produce Name
+    required: true
+  - name: varietal
+    type: text
+    label: Varietal
+    required: true
+  - name: batch_id
+    type: text
+    label: Batch Number
+    required: true
+  - name: fermentation_stage
+    type: text
+    label: Fermentation Stage (Primary/Secondary)
+    required: true
+  - name: start_date
+    type: date
+    label: Fermentation Start Date
+    required: true
+  - name: substrate_type
+    type: text
+    label: Substrate Type
+    required: false
+  - name: starting_brix
+    type: decimal
+    label: Starting Brix
+    required: false
+  - name: starting_ph
+    type: decimal
+    label: Starting pH
+    required: false
+  - name: starting_temp_c
+    type: decimal
+    label: "Starting Temperature (\xB0C)"
+    required: false
+  - name: yeast_strain
+    type: text
+    label: Yeast Strain
+    required: false
+  - name: fermentation_notes
+    type: textarea
+    label: Fermentation Notes
+    required: false

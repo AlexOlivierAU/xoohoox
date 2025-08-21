@@ -1,0 +1,10 @@
+{
+	"name": "intake_id_handler",
+	"version": "1.0.0",
+	"main": "index.js",
+	"author": "xoohoox-dev@custodimus.com.au",
+	"dependencies": {
+		"express": "^5.1.0",
+		"zcatalyst-sdk-node": "latest"
+	}
+}

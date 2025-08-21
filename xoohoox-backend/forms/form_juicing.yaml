@@ -1,0 +1,42 @@
+form_name: juicing_evaluation
+fields:
+- id: grower
+  label: Grower Participant Name
+  type: text
+  required: true
+- id: fruit
+  label: Produce Name
+  type: text
+  required: true
+- id: varietal
+  label: Varietal
+  type: text
+  required: false
+- id: batch_id
+  label: Batch No.
+  type: text
+  required: true
+- id: amount_frozen_kg
+  label: Amount Frozen (Kgs)
+  type: decimal
+  required: false
+- id: defrost_start_time
+  label: Defrost Start Time
+  type: time
+  required: false
+- id: defrost_finish_time
+  label: Defrost Finish Time
+  type: time
+  required: false
+- id: defrost_duration
+  label: Time Taken to Defrost
+  type: text
+  required: false
+- id: clarified_volume_ml
+  label: Volume Clarified Juice (mls)
+  type: decimal
+  required: false
+- id: clarified_yield_ratio
+  label: Clarified Juice mls/kg
+  type: decimal
+  required: false

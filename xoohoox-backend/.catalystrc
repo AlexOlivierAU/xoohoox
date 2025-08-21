@@ -1,0 +1,38 @@
+{
+  "defaults": {
+    "project": 1,
+    "env": 1
+  },
+  "actives": {
+    "project": 1,
+    "env": 1
+  },
+  "projects": [
+    {
+      "idx": 1,
+      "id": "723000000011001",
+      "name": "XooHooXBackend",
+      "domain": {
+        "id": "8002759711",
+        "name": "xoohooxbackend-7005247129.development"
+      },
+      "timezone": "Australia/Sydney",
+      "env": [
+        {
+          "idx": 1,
+          "id": "7005247129",
+          "name": "Development",
+          "type": 3,
+          "env_status": "Active",
+          "project_details": {
+            "project_name": "XooHooXBackend",
+            "id": "723000000011001",
+            "project_type": "Live"
+          },
+          "is_default": true,
+          "action_required": false
+        }
+      ]
+    }
+  ]
+}

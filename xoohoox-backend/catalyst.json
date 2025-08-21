@@ -1,0 +1,9 @@
+{
+  "functions": {
+    "targets": [
+      "intake_id_handler"
+    ],
+    "ignore": [],
+    "source": "functions"
+  }
+}

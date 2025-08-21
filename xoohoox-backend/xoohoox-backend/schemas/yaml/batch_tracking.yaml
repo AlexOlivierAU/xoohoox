@@ -1,0 +1,134 @@
+title: Batch Tracking Form
+description: Core form for tracking fruit batches through the processing pipeline
+version: 1.0
+
+fields:
+  batch_id:
+    type: string
+    required: true
+    description: Unique identifier for the batch
+    pattern: "^[A-Z0-9]{6}$"
+    help: "Format: 6 characters, uppercase letters and numbers only"
+
+  arrival_date:
+    type: date
+    required: true
+    description: Date when the fruit batch arrived
+    help: "Format: YYYY-MM-DD"
+
+  fruit_type:
+    type: string
+    required: true
+    description: Type of fruit in the batch
+    enum:
+      - Apple
+      - Pear
+      - Quince
+      - Other
+    help: "Select the type of fruit"
+
+  supplier_name:
+    type: string
+    required: true
+    description: Name of the fruit supplier
+    minLength: 2
+    help: "Enter the supplier's name"
+
+  supplier_batch_id:
+    type: string
+    required: true
+    description: Supplier's batch identifier
+    help: "Enter the batch ID provided by the supplier"
+
+  quantity_kg:
+    type: number
+    required: true
+    description: Total quantity of fruit in kilograms
+    minimum: 0
+    help: "Enter the weight in kilograms"
+
+  quality_grade:
+    type: string
+    required: true
+    description: Initial quality assessment grade
+    enum:
+      - A
+      - B
+      - C
+      - Rejected
+    help: "Select the quality grade"
+
+  storage_location:
+    type: string
+    required: true
+    description: Where the batch is stored
+    help: "Enter the storage location code"
+
+  storage_conditions:
+    type: string
+    required: true
+    description: Storage conditions details
+    help: "Describe the storage conditions"
+
+  initial_notes:
+    type: text
+    required: false
+    description: Any initial observations or notes
+    help: "Enter any relevant notes about the batch"
+
+  status:
+    type: string
+    required: true
+    description: Current status of the batch
+    enum:
+      - Received
+      - In Storage
+      - In Processing
+      - Completed
+      - Failed
+    default: Received
+    help: "Current status of the batch"
+
+  processing_start_date:
+    type: date
+    required: false
+    description: Date when processing began
+    help: "Format: YYYY-MM-DD"
+
+  processing_end_date:
+    type: date
+    required: false
+    description: Date when processing completed
+    help: "Format: YYYY-MM-DD"
+
+  final_product_type:
+    type: string
+    required: false
+    description: Type of final product produced
+    enum:
+      - Juice
+      - Cider
+      - Vinegar
+      - Other
+    help: "Select the final product type"
+
+  final_product_quantity:
+    type: number
+    required: false
+    description: Quantity of final product in liters
+    minimum: 0
+    help: "Enter the quantity in liters"
+
+  quality_issues:
+    type: text
+    required: false
+    description: Any quality issues encountered
+    help: "Describe any quality issues"
+
+validations:
+  - rule: processing_end_date > processing_start_date
+    message: "Processing end date must be after start date"
+  - rule: arrival_date <= processing_start_date
+    message: "Processing cannot start before arrival"
+  - rule: final_product_quantity <= quantity_kg
+    message: "Final product quantity cannot exceed input quantity" 

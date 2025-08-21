@@ -1,0 +1,10 @@
+{
+    "type": "object",
+    "properties": {
+        "strain_name": "string",
+        "genetic_notes": "string",
+        "function_tags": "array",
+        "origin": "string",
+        "last_tested_batch": "string"
+    }
+}

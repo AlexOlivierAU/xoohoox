@@ -1,0 +1,11 @@
+{
+    "type": "object",
+    "properties": {
+        "sample_id": "string",
+        "score_aroma": "integer",
+        "score_color": "integer",
+        "score_taste": "integer",
+        "evaluator_name": "string",
+        "comments": "string"
+    }
+}

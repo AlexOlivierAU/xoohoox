@@ -1,0 +1,26 @@
+{
+  "name": "xoohoox-backend",
+  "version": "1.0.0",
+  "description": "A FastAPI-based backend service for the Xoohoox Fermentation & Distillation Management System.",
+  "scripts": {
+    "start": "python run_dev.py",
+    "dev": "python run_dev.py",
+    "test": "python -m pytest",
+    "test:coverage": "python -m pytest --cov=app tests/",
+    "lint": "python -m flake8 app tests",
+    "format": "python -m black app tests",
+    "migrate": "python -m alembic upgrade head",
+    "migrate:create": "python -m alembic revision --autogenerate -m",
+    "create-user": "python create_test_user.py"
+  },
+  "keywords": [
+    "fastapi",
+    "python",
+    "backend",
+    "api",
+    "fermentation",
+    "distillation"
+  ],
+  "author": "Xoohoox Team",
+  "license": "ISC"
+} 

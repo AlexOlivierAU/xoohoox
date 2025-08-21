@@ -1,0 +1,38 @@
+form_name: fermentation_evaluation
+fields:
+- id: batch_id
+  label: 'Batch #'
+  type: text
+  required: true
+- id: ferment_date
+  label: Ferment Date
+  type: date
+  required: true
+- id: abv_final
+  label: Final ABV (%)
+  type: decimal
+  required: true
+- id: pH_final
+  label: Final pH
+  type: decimal
+  required: false
+- id: clarity
+  label: Clarity
+  type: text
+  required: false
+- id: aroma
+  label: Aroma Notes
+  type: text
+  required: false
+- id: flavour
+  label: Flavour Notes
+  type: text
+  required: false
+- id: ferment_sample_ids
+  label: Ferment Sample IDs
+  type: text
+  required: false
+- id: notes
+  label: Evaluator Notes
+  type: text
+  required: false

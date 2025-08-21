@@ -1,0 +1,11 @@
+{
+    "type": "object",
+    "properties": {
+        "batch_id": "string",
+        "grower_id": "integer",
+        "produce_type": "string",
+        "varietal": "string",
+        "dispatch_date": "date",
+        "quantity_kg": "number"
+    }
+}
