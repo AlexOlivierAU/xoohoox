@@ -86,23 +86,23 @@ export default function EquipmentMaintenance() {
 
   const getStatusColor = (status: string) => {
     switch (status) {
-      case 'Completed':
-        return '#2ECC71';
-      case 'In Progress':
-        return '#3498DB';
-      case 'Scheduled':
-        return '#F1C40F';
-      case 'Overdue':
-        return '#E74C3C';
+      case 'completed':
+        return 'success';
+      case 'in_progress':
+        return 'primary';
+      case 'scheduled':
+        return 'warning';
+      case 'overdue':
+        return 'error';
       default:
-        return '#95A5A6';
+        return 'default';
     }
   };
 
   return (
     <Box>
       <Box sx={{ display: 'flex', justifyContent: 'space-between', mb: 3 }}>
-        <Typography variant="h4">Equipment Maintenance</Typography>
+        <Typography variant="h4">Distillation Equipment Maintenance</Typography>
         <Button
           variant="contained"
           startIcon={<AddIcon />}

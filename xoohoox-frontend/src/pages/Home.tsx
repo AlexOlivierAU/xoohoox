@@ -243,23 +243,16 @@ const Home = () => {
 
   return (
     <Box sx={{ p: 3 }}>
-      {/* Demo Mode Notice */}
-      {!error && data && (
-        <Alert severity="info" sx={{ mb: 3 }}>
-          <strong>Demo Mode:</strong> Showing sample data. Backend connection will be available when fully configured.
-        </Alert>
-      )}
-      
       {/* Welcome Section */}
       <Paper sx={{ p: 4, mb: 4, background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)', color: 'white' }}>
         <Typography variant="h3" gutterBottom>
           Welcome to Xoohoox
         </Typography>
         <Typography variant="h6" sx={{ mb: 3, opacity: 0.9 }}>
-          Juice Production Management System
+          Distillation Management System
         </Typography>
         <Typography variant="body1" sx={{ mb: 3, opacity: 0.8 }}>
-          Monitor your production, track quality metrics, and manage your juice manufacturing process efficiently.
+          Monitor your distillation, track quality metrics, and manage your distillation process efficiently.
         </Typography>
         <Stack direction="row" spacing={2}>
           <Button

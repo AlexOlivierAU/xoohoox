@@ -6,7 +6,7 @@ from app.core.config import Settings
 def test_settings_load():
     """Test that settings load correctly."""
     settings = Settings()
-    assert settings.PROJECT_NAME == "Xoohoox Juice Production Management"
+    assert settings.PROJECT_NAME == "Xoohoox Distillation Management System"
     assert settings.API_V1_STR == "/api/v1"
     assert len(settings.SECRET_KEY) > 0
     assert settings.ACCESS_TOKEN_EXPIRE_MINUTES == 480

@@ -7,10 +7,9 @@ def create_test_user():
     db = SessionLocal()
     try:
         # Check if test user already exists
-        if not user.get_by_username(db, username="test@example.com"):
+        if not user.get_by_email(db, email="test@example.com"):
             user_in = UserCreate(
                 email="test@example.com",
-                username="test@example.com",
                 password="testpass123",
                 full_name="Test User",
                 is_superuser=True  # Making it a superuser for full access

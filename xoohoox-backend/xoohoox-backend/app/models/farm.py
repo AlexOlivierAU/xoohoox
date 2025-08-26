@@ -17,4 +17,4 @@ class Farm(Base):
     updated_at = Column(DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
     
     # Relationships
-    batches = relationship("Batch", back_populates="farm") 
+    # batches = relationship("Batch", back_populates="farm")  # Commented out - no foreign key 

@@ -92,7 +92,7 @@ const Login = () => {
             Xoohoox
           </Typography>
           <Typography component="h2" variant="h6" color="textSecondary" gutterBottom>
-            Juice Production Management
+            Distillation Management
           </Typography>
           
           <Box component="form" onSubmit={handleSubmit} sx={{ mt: 1, width: '100%' }}>

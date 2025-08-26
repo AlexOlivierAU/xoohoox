@@ -3,7 +3,7 @@ from pydantic_settings import BaseSettings
 from pydantic import AnyHttpUrl, field_validator
 
 class Settings(BaseSettings):
-    PROJECT_NAME: str = "Xoohoox Juice Production Management System"
+    PROJECT_NAME: str = "Xoohoox Distillation Management System"
     API_V1_STR: str = "/api/v1"
     BACKEND_CORS_ORIGINS: List[AnyHttpUrl] = []
     ENVIRONMENT: str = "development"

@@ -3,7 +3,7 @@ from sqlalchemy.orm import relationship
 from datetime import datetime
 import enum
 
-from app.db.base_class import Base
+from app.models.base import BaseModel
 
 class UpscaleStage(str, enum.Enum):
     TEST_4 = "Test 4"
@@ -15,10 +15,8 @@ class UpscaleStatus(str, enum.Enum):
     COMPLETE = "complete"
     FAILED = "failed"
 
-class UpscaleRun(Base):
+class UpscaleRun(BaseModel):
     __tablename__ = "upscale_runs"
-
-    id = Column(Integer, primary_key=True, index=True)
     upscale_id = Column(String, unique=True, index=True)  # U-042-03-5L format
     trial_id = Column(Integer, ForeignKey("fermentation_trials.id"))
     stage = Column(Enum(UpscaleStage))
@@ -27,7 +25,6 @@ class UpscaleRun(Base):
     abv_result = Column(Float)
     compound_summary = Column(String, nullable=True)
     status = Column(Enum(UpscaleStatus), default=UpscaleStatus.PENDING)
-    timestamp = Column(DateTime, default=datetime.utcnow)
 
     # Relationships
     trial = relationship("FermentationTrial", back_populates="upscale_runs")

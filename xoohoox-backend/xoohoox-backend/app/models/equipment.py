@@ -4,12 +4,12 @@ from app.models.base import BaseModel
 from app.models.enums import EquipmentType, EquipmentStatus
 
 class Equipment(BaseModel):
-    """Model for equipment in the juice production facility"""
+    """Model for equipment in the distillation facility"""
     __tablename__ = "equipment"
 
     name = Column(String(100), nullable=False, index=True)
-    type = Column(Enum(EquipmentType), nullable=False)
-    status = Column(Enum(EquipmentStatus), nullable=False, default=EquipmentStatus.OPERATIONAL, server_default=EquipmentStatus.OPERATIONAL.value)
+    type = Column(String(50), nullable=False)
+    status = Column(String(50), nullable=False, default=EquipmentStatus.OPERATIONAL.value, server_default=EquipmentStatus.OPERATIONAL.value)
     capacity = Column(Float, nullable=True)
     description = Column(String, nullable=True)
     manufacturer = Column(String(100), nullable=True)
@@ -23,4 +23,4 @@ class Equipment(BaseModel):
     notes = Column(String, nullable=True)
 
     # Relationships
-    maintenance_records = relationship("EquipmentMaintenance", back_populates="equipment") 
+    # maintenance_records = relationship("EquipmentMaintenance", back_populates="equipment")  # Temporarily commented out 

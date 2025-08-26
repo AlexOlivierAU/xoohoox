@@ -140,7 +140,7 @@ const BatchList = () => {
         <Button
           variant="contained"
           startIcon={<AddIcon />}
-          onClick={() => navigate('/batches/new')}
+          onClick={() => navigate('/batches/create')}
         >
           New Batch
         </Button>

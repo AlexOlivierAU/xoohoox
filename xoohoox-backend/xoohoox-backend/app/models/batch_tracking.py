@@ -3,13 +3,11 @@ from typing import Optional
 from sqlalchemy import Column, Integer, String, DateTime, Float, ForeignKey, Enum as SQLEnum, JSON
 from sqlalchemy.orm import relationship
 
-from app.db.base_class import Base
+from app.models.base import BaseModel
 from app.models.enums import FruitType, ProcessStatus
 
-class BatchTracking(Base):
+class BatchTracking(BaseModel):
     __tablename__ = "batch_tracking"
-
-    id = Column(Integer, primary_key=True, index=True)
     batch_id = Column(String, unique=True, index=True, nullable=False)
     name = Column(String, nullable=False)
     fruit_type = Column(SQLEnum(FruitType), nullable=False)
@@ -31,6 +29,11 @@ class BatchTracking(Base):
     production_date = Column(DateTime, nullable=True)
     recipe_id = Column(Integer, nullable=True)
     ingredients = Column(JSON, nullable=True, default=list)
+
+    # Relationships
+    transformation_stages = relationship("TransformationStage", back_populates="batch")
+    quality_records = relationship("QualityControl", back_populates="batch")  # Added for QualityControl relationship
+    trials = relationship("FermentationTrial", back_populates="batch")  # Added for FermentationTrial relationship
 
     def __repr__(self):
         return f"<Batch {self.batch_id} ({self.name})>" 

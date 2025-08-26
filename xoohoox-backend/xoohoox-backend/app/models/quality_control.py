@@ -30,5 +30,5 @@ class QualityControl(BaseModel):
 
     # Relationships
     batch = relationship("BatchTracking", back_populates="quality_records", lazy="joined")
-    tester = relationship("User", backref="quality_tests", lazy="joined")
-    juicing_input = relationship("JuicingInputLog", back_populates="quality_checks", lazy="joined") 
+    # tester = relationship("User", backref="quality_tests", lazy="joined")  # Temporarily commented out - User model not ready
+    # juicing_input = relationship("JuicingInputLog", back_populates="quality_checks", lazy="joined")  # Temporarily commented out 

@@ -1,11 +1,11 @@
 from datetime import datetime
 from sqlalchemy import Column, Integer, String, Float, DateTime, JSON, ForeignKey, Enum
 from sqlalchemy.orm import relationship
-from app.db.base_class import Base
+from app.models.base import BaseModel
 from app.models.enums import BatchStatus, FruitType, JuiceType
 
-class Batch(Base):
-    id = Column(Integer, primary_key=True, index=True)
+class Batch(BaseModel):
+    __tablename__ = "batches"
     name = Column(String, index=True)
     fruit_type = Column(Enum(FruitType), nullable=False)
     juice_type = Column(Enum(JuiceType), nullable=False)
@@ -18,11 +18,12 @@ class Batch(Base):
     batch_metadata = Column(JSON, nullable=True)
     
     # Relationships
-    farm = relationship("Farm", back_populates="batch")
-    juicing_log = relationship("JuicingLog", back_populates="batch")
+    # farm = relationship("Farm", back_populates="batch")  # Commented out - no foreign key
+    juicing_logs = relationship("JuicingLog", back_populates="batch")
     fermentation_logs = relationship("FermentationLog", back_populates="batch")
     evaluations = relationship("Evaluation", back_populates="batch")
     yeast_strain = relationship("YeastStrain", back_populates="batch")
+    trials = relationship("FermentationTrial", back_populates="batch")
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)

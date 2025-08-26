@@ -10,7 +10,7 @@ from app.core import security
 from app.core.config import settings
 from app.crud.user import user
 from app.schemas.token import Token
-from app.schemas.user import UserCreate, User, UserInDBBase
+from app.schemas.user import UserCreate, User, UserInDB
 
 logger = logging.getLogger(__name__)
 router = APIRouter()

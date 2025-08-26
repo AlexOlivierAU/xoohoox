@@ -4,7 +4,7 @@ from typing import Optional
 from sqlalchemy import Column, Integer, String, DateTime, Float, Text, ForeignKey, Enum as SQLEnum, Boolean, Numeric
 from sqlalchemy.orm import relationship
 
-from app.db.base_class import Base
+from app.models.base import BaseModel
 from app.models.enums import YeastStrain, BatchStatus
 
 class TransformationType(str, Enum):
@@ -33,11 +33,9 @@ class JuiceProcessingType(str, Enum):
     JP4 = "JP4"  # Extractor Juice
     JP5 = "JP5"  # Optional variations
 
-class TransformationStage(Base):
+class TransformationStage(BaseModel):
     __tablename__ = "transformation_stages"
-
-    id = Column(Integer, primary_key=True, index=True)
-    batch_id = Column(Integer, ForeignKey("batch_tracking.batch_id"))
+    batch_id = Column(Integer, ForeignKey("batch_tracking.id"))
     stage_number = Column(Integer, nullable=False)
     stage_name = Column(String, nullable=False)
     stage_type = Column(SQLEnum(TransformationType), nullable=False)
@@ -50,8 +48,6 @@ class TransformationStage(Base):
     planned_duration_days = Column(Integer, nullable=True)  # Planned duration in days
     actual_duration_days = Column(Numeric(5, 1), nullable=True)  # Actual duration in days (with decimal for partial days)
     branching_rule = Column(String, nullable=True)  # For vinegar path (8-13% ABV) or other branching logic
-    created_at = Column(DateTime, default=datetime.utcnow)
-    updated_at = Column(DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
 
     # Relationships
     batch = relationship("BatchTracking", back_populates="transformation_stages")
@@ -63,12 +59,10 @@ class TransformationStage(Base):
     distillation_results = relationship("DistillationResults", back_populates="stage", uselist=False)
     stage2_results = relationship("Stage2Results", back_populates="stage", uselist=False)
     fruit_performance = relationship("FruitPerformance", back_populates="stage", uselist=False)
-    parent_stage = relationship("TransformationStage", remote_side=[id], backref="upscale_stages")
+    parent_stage = relationship("TransformationStage", remote_side="TransformationStage.id", backref="upscale_stages")
 
-class JuicingResults(Base):
+class JuicingResults(BaseModel):
     __tablename__ = "juicing_results"
-
-    id = Column(Integer, primary_key=True, index=True)
     stage_id = Column(Integer, ForeignKey("transformation_stages.id"))
     
     # Juice processing variant
@@ -100,7 +94,7 @@ class JuicingResults(Base):
     # Relationships
     stage = relationship("TransformationStage", back_populates="juicing_results")
 
-class ChemistryResults(Base):
+class ChemistryResults(BaseModel):
     __tablename__ = "chemistry_results"
 
     id = Column(Integer, primary_key=True, index=True)
@@ -134,7 +128,7 @@ class ChemistryResults(Base):
     # Relationships
     stage = relationship("TransformationStage", back_populates="chemistry_results")
 
-class HeatActivationResults(Base):
+class HeatActivationResults(BaseModel):
     __tablename__ = "heat_activation_results"
 
     id = Column(Integer, primary_key=True, index=True)
@@ -162,7 +156,7 @@ class HeatActivationResults(Base):
     # Relationships
     stage = relationship("TransformationStage", back_populates="heat_activation_results")
 
-class FermentationResults(Base):
+class FermentationResults(BaseModel):
     __tablename__ = "fermentation_results"
 
     id = Column(Integer, primary_key=True, index=True)
@@ -229,9 +223,9 @@ class FermentationResults(Base):
 
     # Relationships
     stage = relationship("TransformationStage", back_populates="fermentation_results")
-    parent_trial = relationship("FermentationResults", remote_side=[id], backref="upscale_trials")
+    parent_trial = relationship("FermentationResults", remote_side="FermentationResults.id", backref="upscale_trials")
 
-class VinegarResults(Base):
+class VinegarResults(BaseModel):
     __tablename__ = "vinegar_results"
 
     id = Column(Integer, primary_key=True, index=True)
@@ -270,7 +264,7 @@ class VinegarResults(Base):
     # Relationships
     stage = relationship("TransformationStage", back_populates="vinegar_results")
 
-class DistillationResults(Base):
+class DistillationResults(BaseModel):
     __tablename__ = "distillation_results"
 
     id = Column(Integer, primary_key=True, index=True)
@@ -312,7 +306,7 @@ class DistillationResults(Base):
     # Relationships
     stage = relationship("TransformationStage", back_populates="distillation_results")
 
-class Stage2Results(Base):
+class Stage2Results(BaseModel):
     __tablename__ = "stage2_results"
 
     id = Column(Integer, primary_key=True, index=True)
@@ -349,7 +343,7 @@ class Stage2Results(Base):
     # Relationships
     stage = relationship("TransformationStage", back_populates="stage2_results")
 
-class FruitPerformance(Base):
+class FruitPerformance(BaseModel):
     __tablename__ = "fruit_performance"
 
     id = Column(Integer, primary_key=True, index=True)

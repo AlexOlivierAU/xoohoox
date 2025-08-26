@@ -1,7 +1,7 @@
 # Xoohoox Backend
 
 ## Overview
-Xoohoox is a juice production management system backend that provides API endpoints for managing batches, quality control, and production processes.
+Xoohoox is a distillation management system backend that provides API endpoints for managing batches, quality control, and production processes.
 
 ## Tech Stack
 - Python 3.9+
@@ -40,7 +40,7 @@ The API provides the following main endpoints:
 ## Data Models
 The system includes the following main models:
 
-- **Batch**: Represents a juice production batch
+- **Batch**: Represents a distillation batch
 - **QualityTest**: Quality control tests for batches
 - **MaintenanceLog**: Equipment maintenance records
 - **User**: System users with role-based access

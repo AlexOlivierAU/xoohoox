@@ -4,7 +4,7 @@ from app.models.base import BaseModel
 from app.models.enums import EquipmentType, EquipmentStatus
 
 class Equipment(BaseModel):
-    """Model for equipment in the juice production facility"""
+    """Model for equipment in the distillation facility"""
     __tablename__ = "equipment"
 
     name = Column(String(100), nullable=False, index=True)

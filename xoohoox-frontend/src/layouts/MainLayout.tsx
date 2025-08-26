@@ -33,6 +33,7 @@ import {
   Build as BuildIcon,
   People as PeopleIcon,
   LocalDrink as DrinkIcon,
+  Agriculture as FarmIcon,
 } from '@mui/icons-material';
 
 const drawerWidth = 240;
@@ -73,6 +74,8 @@ const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
     { text: 'Quality Control', icon: <Assessment />, path: '/quality-checks' },
     { text: 'Inventory', icon: <InventoryIcon />, path: '/inventory' },
     { text: 'Equipment', icon: <BuildIcon />, path: '/equipment-maintenance' },
+    { text: 'Farmers & Suppliers', icon: <FarmIcon />, path: '/farmers-suppliers' },
+    { text: 'Fermentation Trials', icon: <Science />, path: '/fermentation-trials' },
     { text: 'Analytics', icon: <Timeline />, path: '/analytics' },
     { text: 'Reports', icon: <Assessment />, path: '/reports' },
     { text: 'Users', icon: <PeopleIcon />, path: '/users' },

@@ -35,13 +35,19 @@ def read_maintenance_logs(
     """
     Retrieve maintenance log entries.
     """
-    if maintenance_id:
-        logs = maintenance_log.get_by_maintenance_id(db=db, maintenance_id=maintenance_id)
-    elif performed_by:
-        logs = maintenance_log.get_by_performed_by(db=db, performed_by=performed_by)
-    else:
-        logs = maintenance_log.get_multi(db=db, skip=skip, limit=limit)
-    return logs
+    try:
+        if maintenance_id:
+            logs = maintenance_log.get_by_maintenance_id(db=db, maintenance_id=maintenance_id)
+        elif performed_by:
+            logs = maintenance_log.get_by_performed_by(db=db, performed_by=performed_by)
+        else:
+            logs = maintenance_log.get_multi(db=db, skip=skip, limit=limit)
+        return logs
+    except Exception as e:
+        print(f"Error in maintenance logs endpoint: {e}")
+        import traceback
+        traceback.print_exc()
+        raise HTTPException(status_code=500, detail=f"Database error: {str(e)}")
 
 @router.get("/{log_id}", response_model=MaintenanceLogResponse)
 def read_maintenance_log(
@@ -88,18 +94,4 @@ def delete_maintenance_log(
     log = maintenance_log.remove(db=db, id=log_id)
     return log
 
-@router.get("/")
-def list_logs(current_user: str = Depends(deps.get_current_user)):
-    """
-    List all maintenance logs.
-    """
-    # Return dummy data for now
-    return [
-        {
-            "id": 1,
-            "equipment_id": "E001",
-            "maintenance_id": 1,
-            "notes": "Regular cleaning completed",
-            "date": "2024-01-20"
-        }
-    ] 
+# Removed duplicate endpoint that required authentication 

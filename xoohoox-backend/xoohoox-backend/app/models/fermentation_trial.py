@@ -2,7 +2,7 @@ from datetime import datetime
 from typing import List
 from sqlalchemy import Column, String, Float, Integer, ForeignKey, DateTime, JSON, Enum as SQLEnum
 from sqlalchemy.orm import relationship
-from app.db.base_class import Base
+from app.models.base import BaseModel
 import enum
 
 class PathTaken(str, enum.Enum):
@@ -17,12 +17,10 @@ class JuiceVariant(str, enum.Enum):
     JP4 = "JP4"
     JP5 = "JP5"
 
-class FermentationTrial(Base):
+class FermentationTrial(BaseModel):
     __tablename__ = "fermentation_trials"
-
-    id = Column(Integer, primary_key=True, index=True)
     trial_id = Column(String, unique=True, index=True)  # e.g., T-042-03
-    batch_id = Column(Integer, ForeignKey("batch.id"))
+    batch_id = Column(String, ForeignKey("batch_tracking.batch_id"))
     
     # Trial Parameters
     yeast_strain = Column(String)
@@ -40,8 +38,7 @@ class FermentationTrial(Base):
     status = Column(String)  # Fermenting, Awaiting, Complete, etc.
     
     # Timestamps
-    created_at = Column(DateTime, default=datetime.utcnow)
-    updated_at = Column(DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
+
     
     # JSON Fields for Complex Data
     daily_readings = Column(JSON, default=list)  # List of daily measurement records
@@ -49,7 +46,8 @@ class FermentationTrial(Base):
     compound_results = Column(JSON, default=dict)  # Compound test results
     
     # Relationships
-    batch = relationship("Batch", back_populates="trials")
+    batch = relationship("BatchTracking", back_populates="trials")  # Fixed: Batch -> BatchTracking
+    upscale_runs = relationship("UpscaleRun", back_populates="trial")
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)

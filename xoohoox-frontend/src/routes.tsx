@@ -17,6 +17,9 @@ import QualityControl from './pages/QualityControl';
 import Inventory from './pages/Inventory';
 import UserManagement from './pages/UserManagement';
 import EnhancedBatchForm from './pages/EnhancedBatchForm';
+import FarmersSuppliers from './pages/FarmersSuppliers';
+import FermentationTrials from './pages/FermentationTrials';
+import NewQualityCheck from './pages/NewQualityCheck';
 
 const AppRoutes = () => {
   return (
@@ -30,12 +33,16 @@ const AppRoutes = () => {
         <Route path="reports" element={<Reports />} />
         <Route path="settings" element={<Settings />} />
         <Route path="batches" element={<BatchList />} />
+        <Route path="batches/create" element={<EnhancedBatchForm />} />
         <Route path="batches/:batchId" element={<BatchDetails />} />
         <Route path="quality-checks" element={<QualityChecks />} />
+        <Route path="quality-checks/new" element={<NewQualityCheck />} />
         <Route path="batch-management" element={<BatchManagement />} />
         <Route path="equipment-maintenance" element={<EquipmentMaintenance />} />
         <Route path="quality-control" element={<QualityControl />} />
         <Route path="inventory" element={<Inventory />} />
+        <Route path="farmers-suppliers" element={<FarmersSuppliers />} />
+        <Route path="fermentation-trials" element={<FermentationTrials />} />
         <Route path="users" element={<UserManagement />} />
         <Route path="enhanced-batch" element={<EnhancedBatchForm />} />
       </Route>

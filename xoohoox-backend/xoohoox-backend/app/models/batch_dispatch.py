@@ -1,11 +1,9 @@
 from sqlalchemy import Column, Integer, String, Float, Date, ForeignKey
 from sqlalchemy.orm import relationship
-from app.db.base_class import Base
+from app.models.base import BaseModel
 
-class BatchDispatch(Base):
+class BatchDispatch(BaseModel):
     __tablename__ = "batch_dispatches"
-
-    id = Column(Integer, primary_key=True, index=True)
     batch_id = Column(String, unique=True, index=True, nullable=False)
     grower_id = Column(Integer, nullable=False)
     produce_type = Column(String, nullable=False)

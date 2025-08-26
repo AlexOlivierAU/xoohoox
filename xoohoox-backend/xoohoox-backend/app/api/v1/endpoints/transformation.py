@@ -7,20 +7,20 @@ from app.crud import transformation as crud
 from app.schemas.transformation import (
     TransformationStageCreate,
     TransformationStageUpdate,
-    TransformationStageInDB,
+    TransformationStage,
     JuicingResultsCreate,
     JuicingResultsUpdate,
-    JuicingResultsInDB,
+    JuicingResults,
     FermentationResultsCreate,
     FermentationResultsUpdate,
-    FermentationResultsInDB,
+    FermentationResults,
     TransformationStageWithResults
 )
 
 router = APIRouter()
 
 # Transformation Stage endpoints
-@router.post("/stages/", response_model=TransformationStageInDB)
+@router.post("/stages/", response_model=TransformationStage)
 def create_transformation_stage(
     *,
     db: Session = Depends(deps.get_db),
@@ -30,7 +30,7 @@ def create_transformation_stage(
     stage = crud.create_transformation_stage(db=db, stage=stage_in)
     return stage
 
-@router.get("/stages/", response_model=List[TransformationStageInDB])
+@router.get("/stages/", response_model=List[TransformationStage])
 def read_transformation_stages(
     db: Session = Depends(deps.get_db),
     batch_id: Optional[str] = None,
@@ -58,7 +58,7 @@ def read_transformation_stage(
         raise HTTPException(status_code=404, detail="Transformation stage not found")
     return stage
 
-@router.put("/stages/{stage_id}", response_model=TransformationStageInDB)
+@router.put("/stages/{stage_id}", response_model=TransformationStage)
 def update_transformation_stage(
     *,
     db: Session = Depends(deps.get_db),
@@ -88,7 +88,7 @@ def delete_transformation_stage(
     return {"message": "Transformation stage deleted successfully"}
 
 # Juicing Results endpoints
-@router.post("/stages/{stage_id}/juicing", response_model=JuicingResultsInDB)
+@router.post("/stages/{stage_id}/juicing", response_model=JuicingResults)
 def create_juicing_results(
     *,
     db: Session = Depends(deps.get_db),
@@ -104,7 +104,7 @@ def create_juicing_results(
     results = crud.create_juicing_results(db=db, results=results_in)
     return results
 
-@router.get("/stages/{stage_id}/juicing", response_model=JuicingResultsInDB)
+@router.get("/stages/{stage_id}/juicing", response_model=JuicingResults)
 def read_juicing_results(
     *,
     db: Session = Depends(deps.get_db),
@@ -116,7 +116,7 @@ def read_juicing_results(
         raise HTTPException(status_code=404, detail="Juicing results not found")
     return results
 
-@router.put("/stages/{stage_id}/juicing", response_model=JuicingResultsInDB)
+@router.put("/stages/{stage_id}/juicing", response_model=JuicingResults)
 def update_juicing_results(
     *,
     db: Session = Depends(deps.get_db),
@@ -146,7 +146,7 @@ def delete_juicing_results(
     return {"message": "Juicing results deleted successfully"}
 
 # Fermentation Results endpoints
-@router.post("/stages/{stage_id}/fermentation", response_model=FermentationResultsInDB)
+@router.post("/stages/{stage_id}/fermentation", response_model=FermentationResults)
 def create_fermentation_results(
     *,
     db: Session = Depends(deps.get_db),
@@ -162,7 +162,7 @@ def create_fermentation_results(
     results = crud.create_fermentation_results(db=db, results=results_in)
     return results
 
-@router.get("/stages/{stage_id}/fermentation", response_model=FermentationResultsInDB)
+@router.get("/stages/{stage_id}/fermentation", response_model=FermentationResults)
 def read_fermentation_results(
     *,
     db: Session = Depends(deps.get_db),
@@ -174,7 +174,7 @@ def read_fermentation_results(
         raise HTTPException(status_code=404, detail="Fermentation results not found")
     return results
 
-@router.put("/stages/{stage_id}/fermentation", response_model=FermentationResultsInDB)
+@router.put("/stages/{stage_id}/fermentation", response_model=FermentationResults)
 def update_fermentation_results(
     *,
     db: Session = Depends(deps.get_db),

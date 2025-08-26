@@ -62,9 +62,96 @@ class QualityService {
       return response.data;
     } catch (error) {
       console.log('Falling back to mock quality checks');
-      // Fallback to mock endpoint
-      const response = await api.get('/mock/quality-checks/', { params });
-      return response.data;
+      // Return mock data with proper structure
+      const mockData = {
+        items: [
+          {
+            id: '1',
+            batch_id: 'XHR-20250413-01-01-B001',
+            batch_number: 'B001',
+            check_type: 'pH',
+            result: 'pass' as const,
+            timestamp: '2024-04-13T14:00:00Z',
+            performed_by: 'Lab Technician',
+            notes: 'pH levels within acceptable range',
+            parameters: {
+              temperature: 22.5,
+              ph_level: 4.2,
+              brix_level: 18.5,
+              alcohol_content: 6.8
+            }
+          },
+          {
+            id: '2',
+            batch_id: 'XHR-20250413-01-01-B001',
+            batch_number: 'B001',
+            check_type: 'Brix',
+            result: 'pass' as const,
+            timestamp: '2024-04-13T15:00:00Z',
+            performed_by: 'Lab Technician',
+            notes: 'Brix levels optimal for fermentation',
+            parameters: {
+              temperature: 22.5,
+              ph_level: 4.2,
+              brix_level: 18.5,
+              alcohol_content: 6.8
+            }
+          },
+          {
+            id: '3',
+            batch_id: 'XHR-20250413-01-02-B002',
+            batch_number: 'B002',
+            check_type: 'pH',
+            result: 'pass' as const,
+            timestamp: '2024-04-10T14:00:00Z',
+            performed_by: 'Lab Technician',
+            notes: 'pH levels stable',
+            parameters: {
+              temperature: 23.0,
+              ph_level: 4.1,
+              brix_level: 19.2,
+              alcohol_content: 7.1
+            }
+          },
+          {
+            id: '4',
+            batch_id: 'XHR-20250413-01-02-B002',
+            batch_number: 'B002',
+            check_type: 'Temperature',
+            result: 'warning' as const,
+            timestamp: '2024-04-10T16:00:00Z',
+            performed_by: 'Lab Technician',
+            notes: 'Temperature slightly above optimal range',
+            parameters: {
+              temperature: 25.5,
+              ph_level: 4.1,
+              brix_level: 19.2,
+              alcohol_content: 7.1
+            }
+          },
+          {
+            id: '5',
+            batch_id: 'XHR-20250413-01-03-B003',
+            batch_number: 'B003',
+            check_type: 'Alcohol Content',
+            result: 'pass' as const,
+            timestamp: '2024-04-12T10:00:00Z',
+            performed_by: 'Lab Technician',
+            notes: 'Alcohol content developing well',
+            parameters: {
+              temperature: 22.0,
+              ph_level: 4.3,
+              brix_level: 17.8,
+              alcohol_content: 8.2
+            }
+          }
+        ],
+        total: 5,
+        page: 1,
+        size: 10,
+        pages: 1
+      };
+      return mockData;
     }
   }
 

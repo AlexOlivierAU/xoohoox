@@ -103,7 +103,7 @@ const EnhancedBatchForm: React.FC = () => {
   return (
     <Box sx={{ p: 3 }}>
       <Typography variant="h4" component="h1" gutterBottom>
-        Enhanced Batch Creation
+        Create New Distillation Batch
       </Typography>
       
       <Paper sx={{ p: 3 }}>

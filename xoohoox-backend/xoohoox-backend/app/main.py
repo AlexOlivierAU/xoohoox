@@ -17,15 +17,15 @@ logger = logging.getLogger(__name__)
 logger.debug("Starting application initialization")
 
 try:
-    # Create database tables
-    logger.debug("Creating database tables")
-    Base.metadata.create_all(bind=engine)
-    logger.debug("Database tables created successfully")
+    # Create database tables - Commented out since tables are created manually
+    # logger.debug("Creating database tables")
+    # Base.metadata.create_all(bind=engine)
+    # logger.debug("Database tables created successfully")
 
     # Create FastAPI app
     app = FastAPI(
         title=settings.PROJECT_NAME,
-        openapi_url=f"{settings.API_V1_STR}/openapi.json"
+        openapi_url="/openapi.json"
     )
     logger.debug("FastAPI app created")
 

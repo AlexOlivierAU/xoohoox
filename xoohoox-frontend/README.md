@@ -1,6 +1,6 @@
-# Xoohoox - Juice Production Management System
+# Xoohoox - Distillation Management System
 
-A comprehensive web application for managing juice production, fermentation, and distillation processes. Built with React, TypeScript, and Material-UI for the frontend, and Python FastAPI for the backend.
+A comprehensive web application for managing distillation, fermentation, and distillation processes. Built with React, TypeScript, and Material-UI for the frontend, and Python FastAPI for the backend.
 
 ## Features
 
