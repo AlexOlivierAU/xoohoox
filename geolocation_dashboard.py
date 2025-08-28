@@ -11,8 +11,8 @@ from typing import List, Dict, Any
 
 # Page configuration
 st.set_page_config(
-    page_title="XooHooX Australian Laboratory Tracking",
-    page_icon="🧪",
+    page_title="XooHooX Australian Farm & Producer Tracking",
+    page_icon="🌾",
     layout="wide",
     initial_sidebar_state="expanded"
 )
@@ -481,9 +481,9 @@ def create_farm_map(farms, paddocks, geofences):
             popup=f"""
             <div style="min-width: 200px;">
                 <h4 style="color: #2E7D32; margin: 0 0 10px 0;">🏡 {farm['name']}</h4>
-                <p style="margin: 5px 0;"><strong>👨‍🌾 Contact:</strong> {farm['farmer_name']}</p>
+                <p style="margin: 5px 0;"><strong>👨‍🌾 Producer:</strong> {farm['farmer_name']}</p>
                 <p style="margin: 5px 0;"><strong>🌍 Region:</strong> {farm['region']}</p>
-                <p style="margin: 5px 0;"><strong>🌱 Research Zones:</strong> {farm['total_paddocks']}</p>
+                <p style="margin: 5px 0;"><strong>🌱 Production Zones:</strong> {farm['total_paddocks']}</p>
                 <p style="margin: 5px 0;"><strong>📏 Total Area:</strong> {farm['total_area_hectares']} ha</p>
                 <p style="margin: 5px 0;"><strong>🏆 Certification:</strong> {farm['certification']}</p>
             </div>
@@ -499,9 +499,9 @@ def create_farm_map(farms, paddocks, geofences):
             popup=f"""
             <div style="min-width: 180px;">
                 <h4 style="color: #1976D2; margin: 0 0 10px 0;">🌱 {paddock['name']}</h4>
-                <p style="margin: 5px 0;"><strong>🍎 Sample Type:</strong> {paddock['fruit_type']}</p>
-                <p style="margin: 5px 0;"><strong>📏 Research Area:</strong> {paddock['area_hectares']} ha</p>
-                <p style="margin: 5px 0;"><strong>📊 Sample Yield:</strong> {paddock['yield_kg']} kg</p>
+                <p style="margin: 5px 0;"><strong>🍎 Crop Type:</strong> {paddock['fruit_type']}</p>
+                <p style="margin: 5px 0;"><strong>📏 Production Area:</strong> {paddock['area_hectares']} ha</p>
+                <p style="margin: 5px 0;"><strong>📊 Harvest Yield:</strong> {paddock['yield_kg']} kg</p>
                 <p style="margin: 5px 0;"><strong>📈 Status:</strong> {paddock['status']}</p>
             </div>
             """,
@@ -533,7 +533,7 @@ def create_farm_map(farms, paddocks, geofences):
     return m
 
 def main():
-    st.markdown('<h1 class="main-header">🧪 XooHooX Australian Laboratory Tracking</h1>', unsafe_allow_html=True)
+    st.markdown('<h1 class="main-header">🌾 XooHooX Australian Farm & Producer Tracking</h1>', unsafe_allow_html=True)
     
     # Sidebar
     st.sidebar.markdown("## 🧭 Navigation")
@@ -551,37 +551,37 @@ def main():
     
     # Farm selection
     farm_names = [farm["name"] for farm in farms]
-    selected_farm = st.sidebar.selectbox("🏡 Select Research Farm", ["All Farms"] + farm_names)
+    selected_farm = st.sidebar.selectbox("🏡 Select Farm or Producer", ["All Farms"] + farm_names)
     
     if page == "Farm Overview":
-        st.markdown('<h2 class="section-header">🏡 Research Farm Overview</h2>', unsafe_allow_html=True)
+        st.markdown('<h2 class="section-header">🏡 Farm & Producer Overview</h2>', unsafe_allow_html=True)
         
         # Metrics with better labels
         col1, col2, col3, col4 = st.columns(4)
         
         with col1:
             total_farms = len(farms)
-            st.metric("🏭 Active Research Farms", total_farms, help="Total number of participating research farms")
+            st.metric("🏭 Active Farms & Producers", total_farms, help="Total number of participating farms and producers")
         
         with col2:
             total_paddocks = len(paddocks)
-            st.metric("🌱 Research Zones", total_paddocks, help="Total number of sample collection zones")
+            st.metric("🌱 Production Zones", total_paddocks, help="Total number of production and collection zones")
         
         with col3:
             total_samples = len(harvests)
-            st.metric("🧪 Samples Collected", total_samples, help="Total research samples collected")
+            st.metric("🍎 Samples Collected", total_samples, help="Total samples collected from farms")
         
         with col4:
             total_weight = sum(h["quantity_kg"] for h in harvests)
-            st.metric("⚖️ Total Sample Weight", f"{total_weight:,} kg", help="Combined weight of all research samples")
+            st.metric("⚖️ Total Sample Weight", f"{total_weight:,} kg", help="Combined weight of all collected samples")
         
         # Interactive map
-        st.markdown('<h3 class="section-header">🗺️ Research Farm Locations</h3>', unsafe_allow_html=True)
+        st.markdown('<h3 class="section-header">🗺️ Farm & Producer Locations</h3>', unsafe_allow_html=True)
         farm_map = create_farm_map(farms, paddocks, geofences)
         st_folium(farm_map, width=800, height=600)
         
         # Farm details
-        st.markdown('<h3 class="section-header">🏡 Research Farm Details</h3>', unsafe_allow_html=True)
+        st.markdown('<h3 class="section-header">🏡 Farm & Producer Details</h3>', unsafe_allow_html=True)
         
         # Filter farms if selected
         display_farms = farms
@@ -601,7 +601,7 @@ def main():
                     </div>
                     <div>
                         <p><span class="info-label">🌍 Region:</span><br><span class="info-value">{farm['region']}</span></p>
-                        <p><span class="info-label">🌱 Research Paddocks:</span><br><span class="info-value">{farm['total_paddocks']} active zones</span></p>
+                        <p><span class="info-label">🌱 Production Zones:</span><br><span class="info-value">{farm['total_paddocks']} active zones</span></p>
                         <p><span class="info-label">📏 Total Area:</span><br><span class="info-value">{farm['total_area_hectares']} hectares</span></p>
                         <p><span class="info-label">🏆 Certification:</span><br><span class="info-value">{farm['certification']}</span></p>
                         <p><span class="info-label">📅 Last Sample Collection:</span><br><span class="info-value">{farm['last_sample_collection']}</span></p>
@@ -611,7 +611,7 @@ def main():
             """, unsafe_allow_html=True)
         
         # Paddock details
-        st.markdown('<h3 class="section-header">🌱 Research Zone Details</h3>', unsafe_allow_html=True)
+        st.markdown('<h3 class="section-header">🌱 Production Zone Details</h3>', unsafe_allow_html=True)
         
         # Filter paddocks if farm selected
         display_paddocks = paddocks
@@ -628,40 +628,40 @@ def main():
                 <h4 style="color: #2E7D32; margin-bottom: 1rem;">🌱 {paddock['name']}</h4>
                 <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
                     <div>
-                        <p><span class="info-label">🍎 Sample Type:</span><br><span class="info-value">{paddock['fruit_type']}</span></p>
-                        <p><span class="info-label">📏 Research Area:</span><br><span class="info-value">{paddock['area_hectares']} hectares</span></p>
-                        <p><span class="info-label">📊 Sample Yield:</span><br><span class="info-value">{paddock['yield_kg']} kg</span></p>
+                        <p><span class="info-label">🍎 Crop Type:</span><br><span class="info-value">{paddock['fruit_type']}</span></p>
+                        <p><span class="info-label">📏 Production Area:</span><br><span class="info-value">{paddock['area_hectares']} hectares</span></p>
+                        <p><span class="info-label">📊 Harvest Yield:</span><br><span class="info-value">{paddock['yield_kg']} kg</span></p>
                         <p><span class="info-label">🌱 Soil Composition:</span><br><span class="info-value">{paddock['soil_type']}</span></p>
                     </div>
                     <div>
                         <p><span class="info-label">💧 Water Management:</span><br><span class="info-value">{paddock['irrigation']}</span></p>
-                        <p><span class="info-label">📅 Last Sample Collection:</span><br><span class="info-value">{paddock['last_harvest']}</span></p>
-                        <p><span class="info-label">📈 Research Status:</span><br><span class="{status_class}">{paddock['status']}</span></p>
+                        <p><span class="info-label">📅 Last Harvest:</span><br><span class="info-value">{paddock['last_harvest']}</span></p>
+                        <p><span class="info-label">📈 Production Status:</span><br><span class="{status_class}">{paddock['status']}</span></p>
                     </div>
                 </div>
             </div>
             """, unsafe_allow_html=True)
     
     elif page == "Batch Tracking":
-        st.markdown('<h2 class="section-header">📦 Research Sample Tracking</h2>', unsafe_allow_html=True)
+        st.markdown('<h2 class="section-header">📦 Sample Collection Tracking</h2>', unsafe_allow_html=True)
         
         # Batch metrics with better labels
         col1, col2, col3 = st.columns(3)
         
         with col1:
             total_batches = len(harvests)
-            st.metric("🧪 Total Research Samples", total_batches, help="Total number of research samples in tracking")
+            st.metric("🍎 Total Samples Collected", total_batches, help="Total number of samples collected from farms")
         
         with col2:
             active_batches = len([h for h in harvests if h["sample_collected"]])
-            st.metric("🔄 Active Samples", active_batches, help="Samples currently being processed")
+            st.metric("🔄 Active Collections", active_batches, help="Samples currently being collected")
         
         with col3:
             avg_quality = sum(h["quality_score"] for h in harvests) / len(harvests)
-            st.metric("⭐ Average Quality Score", f"{avg_quality:.1f}/10", help="Average quality rating of all samples")
+            st.metric("⭐ Average Quality Score", f"{avg_quality:.1f}/10", help="Average quality rating of all collected samples")
         
         # Batch tracking map
-        st.markdown('<h3 class="section-header">📍 Sample Movement Tracking</h3>', unsafe_allow_html=True)
+        st.markdown('<h3 class="section-header">📍 Sample Collection Movement</h3>', unsafe_allow_html=True)
         
         # Create tracking map
         tracking_map = folium.Map(
