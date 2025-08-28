@@ -13,6 +13,7 @@ from app.api.v1.endpoints import (
     upscales,
     transformation,
     login,
+    geolocation,
 )
 
 api_router = APIRouter()
@@ -28,4 +29,5 @@ api_router.include_router(fermentation_trials.router, prefix="/fermentation-tria
 api_router.include_router(quality_control.router, prefix="/quality-control", tags=["quality-control"])
 api_router.include_router(upscales.router, prefix="/upscales", tags=["upscales"])
 api_router.include_router(transformation.router, prefix="/transformation", tags=["transformation"])
+api_router.include_router(geolocation.router, prefix="/geolocation", tags=["geolocation"])
 api_router.include_router(login.router, prefix="/login", tags=["login"]) 

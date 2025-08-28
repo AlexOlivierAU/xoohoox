@@ -1,8 +1,8 @@
-# 🍊 XooHooX Distillation Database Streamlit Visualizer
+# 🧪 XooHooX Australian Laboratory Database Streamlit Visualizer
 
 ## 🎯 **Beautiful Interactive Database Visualization**
 
-Your Streamlit app is now running and provides **4 different ways** to visualize your 553-field, 41-table database with stunning interactive graphs!
+Your Streamlit app is now running and provides **4 different ways** to visualize your 553-field, 41-table laboratory database with stunning interactive graphs!
 
 ## 🚀 **How to Access**
 
@@ -83,14 +83,14 @@ If it doesn't open automatically, manually navigate to that URL.
 ## 🎯 **Key Tables Highlighted**
 
 ### **Core Production (8 tables):**
-- `batch_tracking` (36 fields) - Main batch management
-- `fermentation_trials` (17 fields) - Fermentation experiments
-- `transformation_stages` (16 fields) - Production stages
+- `batch_tracking` (36 fields) - Main sample tracking
+- `fermentation_trials` (17 fields) - Research experiments
+- `transformation_stages` (16 fields) - Processing stages
 
 ### **Process Results (12 tables):**
-- `juicing_results` (19 fields) - Juicing process results
+- `juicing_results` (19 fields) - Sample processing results
 - `chemistry_results` (13 fields) - Chemistry analysis
-- `fermentation_results` (10 fields) - Fermentation outcomes
+- `fermentation_results` (10 fields) - Research outcomes
 
 ### **Quality & Evaluation (6 tables):**
 - `quality_control` (22 fields) - Quality testing
@@ -149,11 +149,11 @@ streamlit run database_visualizer.py --server.headless false
 ## 🎯 **Perfect for Presentations**
 
 The Streamlit visualization is perfect for:
-- **Team presentations** about database structure
-- **Client demonstrations** of system capabilities
+- **Team presentations** about laboratory database structure
+- **Client demonstrations** of research system capabilities
 - **Documentation** of database relationships
 - **Development planning** and architecture discussions
-- **Training** new team members
+- **Training** new laboratory team members
 
 ## 🚀 **Next Steps**
 
@@ -163,4 +163,4 @@ The Streamlit visualization is perfect for:
 4. **Use insights** to plan your backend API development
 5. **Customize colors** or add new visualizations as needed
 
-Your database is now beautifully visualized with interactive, professional graphs! 🎉
+Your laboratory database is now beautifully visualized with interactive, professional graphs! 🎉

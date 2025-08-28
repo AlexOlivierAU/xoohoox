@@ -1,12 +1,13 @@
-# XooHooX - Distillation Management System
+# XooHooX - Australian Laboratory Management System
 
-A comprehensive distillation management system for tracking fermentation trials, batch processing, and quality control throughout the entire production lifecycle.
+A comprehensive laboratory management system for tracking research samples, geolocation monitoring, and quality control throughout the entire research lifecycle.
 
-## 🍊 Overview
+## 🧪 Overview
 
-XooHooX is a full-stack application designed for distillation facilities to manage:
-- **Fermentation Trials**: Yeast strain testing and evaluation
-- **Batch Processing**: End-to-end batch tracking from raw materials to finished product
+XooHooX is a full-stack application designed for Australian research laboratories to manage:
+- **Research Sample Tracking**: End-to-end sample collection and processing
+- **Geolocation Monitoring**: Farm mapping, geofencing, and sample collection tracking
+- **Logistics & Delivery**: Real-time sample collection and laboratory delivery tracking
 - **Quality Control**: Comprehensive quality monitoring and testing
 - **Equipment Maintenance**: Preventive maintenance scheduling
 - **Production Analytics**: Real-time monitoring and reporting
@@ -15,8 +16,10 @@ XooHooX is a full-stack application designed for distillation facilities to mana
 
 ```
 catalyst/
-├── xoohoox-frontend/     # React + TypeScript + Vite
-├── xoohoox-backend/      # FastAPI + SQLAlchemy + PostgreSQL
+├── xoohoox-frontend/     # React + TypeScript + Vite (Main App)
+├── xoohoox-backend/      # FastAPI + SQLAlchemy + PostgreSQL (API)
+├── geolocation_dashboard.py    # Streamlit Geolocation Dashboard
+├── logistics_tracking.py       # Streamlit Logistics Dashboard
 └── README.md
 ```
 
@@ -61,42 +64,84 @@ npm install
 
 ### 5. Start the Application
 ```bash
-# Terminal 1 - Backend
+# Terminal 1 - Backend API
 cd xoohoox-backend/xoohoox-backend
 source venv/bin/activate
-python run_dev.py
+python -m uvicorn app.main:app --reload --port 8000
 
-# Terminal 2 - Frontend
+# Terminal 2 - React Frontend
 cd xoohoox-frontend
 npm run dev
+
+# Terminal 3 - Geolocation Dashboard
+cd /path/to/catalyst
+streamlit run geolocation_dashboard.py --server.port 8501
+
+# Terminal 4 - Logistics Dashboard
+cd /path/to/catalyst
+streamlit run logistics_tracking.py --server.port 8502
 ```
 
 ## 🌐 Access Points
-- **Frontend**: http://localhost:5173
-- **Backend API**: http://localhost:8000
+- **React Frontend**: http://localhost:5173 (Main Laboratory Management System)
+- **Backend API**: http://localhost:8000 (85+ API endpoints)
 - **API Documentation**: http://localhost:8000/docs
+- **Geolocation Dashboard**: http://localhost:8501 (Farm mapping & sample collection)
+- **Logistics Dashboard**: http://localhost:8502 (Sample delivery tracking)
 
 ## 📋 Core Workflows
 
-### 1. Batch Creation & Planning
-- Enhanced batch form with source tracking
-- Batch ID format: `YYMMDD-FARMER-VARIETAL-XXX`
-- Chemistry targets and byproduct tracking
+### 1. Research Sample Collection
+- **Geolocation tracking** from Australian farms
+- **Sample collection** with GPS coordinates
+- **Batch creation** with unique identifiers
+- **Quality assessment** during collection
 
-### 2. Fermentation Management
-- Yeast trial management and evaluation
-- SG drop, EtOH, Brix monitoring
-- Aroma and flocculation assessment
+### 2. Sample Processing & Analysis
+- **Laboratory processing** workflow management
+- **Quality control** testing and validation
+- **Data recording** and analysis tracking
+- **Result reporting** and documentation
 
-### 3. Upscaling Process
-- Multi-stage upscaling (100L → 500L → 5000L)
-- Progress tracking and stage management
-- Quality control at each stage
+### 3. Logistics & Delivery
+- **Real-time tracking** of sample collection vehicles
+- **Delivery monitoring** to laboratory facilities
+- **Route optimization** and scheduling
+- **Status updates** and notifications
 
 ### 4. Quality Control
-- Compound analysis and sensory evaluation
-- Equipment maintenance scheduling
-- Real-time monitoring dashboard
+- **Comprehensive testing** protocols
+- **Equipment maintenance** scheduling
+- **Real-time monitoring** dashboard
+- **Compliance reporting** for Australian standards
+
+## 🗺️ Geolocation Features
+
+### Farm Management
+- **Interactive maps** of Australian research farms
+- **Geofencing** for sample collection zones
+- **Real-time tracking** of sample collection
+- **Weather monitoring** during collection
+
+### Sample Collection Tracking
+- **GPS coordinates** for all collection points
+- **Collection timestamps** and metadata
+- **Quality scores** and assessments
+- **Batch linking** to collection locations
+
+## 🚛 Logistics & Delivery
+
+### Vehicle Tracking
+- **Real-time location** of collection vehicles
+- **Route optimization** and planning
+- **Delivery scheduling** and ETA tracking
+- **Status monitoring** and alerts
+
+### Sample Delivery
+- **End-to-end tracking** from farm to laboratory
+- **Temperature monitoring** during transit
+- **Quality preservation** protocols
+- **Delivery confirmation** and documentation
 
 ## 🛠️ Technology Stack
 
@@ -114,6 +159,12 @@ npm run dev
 - **Alembic** for migrations
 - **Pydantic** for data validation
 
+### Streamlit Dashboards
+- **Folium** for interactive mapping
+- **Plotly** for data visualization
+- **Pandas** for data processing
+- **Streamlit** for rapid dashboard development
+
 ### Development Tools
 - **ESLint** for code linting
 - **Prettier** for code formatting
@@ -127,7 +178,7 @@ catalyst/
 ├── xoohoox-frontend/
 │   ├── src/
 │   │   ├── components/     # Reusable UI components
-│   │   ├── pages/         # Page components
+│   │   ├── pages/         # Page components (20+ pages)
 │   │   ├── hooks/         # Custom React hooks
 │   │   ├── services/      # API services
 │   │   ├── store/         # Redux store
@@ -136,13 +187,15 @@ catalyst/
 │   └── package.json
 ├── xoohoox-backend/
 │   ├── app/
-│   │   ├── api/           # API endpoints
-│   │   ├── models/        # Database models
+│   │   ├── api/           # API endpoints (85+ endpoints)
+│   │   ├── models/        # Database models (41 tables)
 │   │   ├── schemas/       # Pydantic schemas
 │   │   ├── crud/          # Database operations
 │   │   └── core/          # Configuration
 │   ├── migrations/        # Database migrations
 │   └── requirements.txt
+├── geolocation_dashboard.py    # Farm mapping & sample collection
+├── logistics_tracking.py       # Delivery & logistics tracking
 └── README.md
 ```
 
@@ -160,7 +213,7 @@ DEBUG=True
 
 **Frontend** (`xoohoox-frontend/.env`):
 ```env
-VITE_API_URL=http://localhost:8000
+VITE_API_URL=http://localhost:8000/api/v1
 VITE_WS_URL=ws://localhost:8000/ws
 ```
 
@@ -178,7 +231,7 @@ cd xoohoox-frontend
 npm test
 ```
 
-## 📊 API Endpoints
+## 📊 API Endpoints (85+ Total)
 
 ### Authentication
 - `POST /api/v1/auth/login` - User login
@@ -198,6 +251,25 @@ npm test
 - `GET /api/v1/maintenance` - List maintenance logs
 - `POST /api/v1/maintenance` - Create maintenance log
 
+### Mock Data (Development)
+- `GET /api/v1/mock/batches` - Mock batch data
+- `GET /api/v1/mock/quality-checks` - Mock QC data
+
+## 🗺️ Australian Geographic Coverage
+
+### Research Farms
+- **Victoria**: Mildura region (Citrus research)
+- **Tasmania**: Hobart region (Apple and grape research)
+- **Queensland**: Cairns region (Tropical fruit research)
+- **New South Wales**: Hunter Valley (Wine grape research)
+- **Western Australia**: Margaret River (Premium fruit research)
+
+### Sample Collection Zones
+- **Geofenced areas** for precise collection tracking
+- **Weather monitoring** during collection periods
+- **Quality assessment** at collection points
+- **Real-time GPS tracking** of collection activities
+
 ## 🤝 Contributing
 
 1. Fork the repository
@@ -215,16 +287,21 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 For support and questions:
 - Create an issue on GitHub
 - Check the [API Documentation](http://localhost:8000/docs) when running locally
+- Review the [Streamlit Visualization Guide](STREAMLIT_VISUALIZATION.md)
 
 ## 🗺️ Roadmap
 
+- [x] ✅ Geolocation tracking system
+- [x] ✅ Logistics and delivery monitoring
+- [x] ✅ Australian farm mapping
+- [x] ✅ Real-time sample collection tracking
 - [ ] Real-time WebSocket notifications
 - [ ] Advanced analytics dashboard
 - [ ] Mobile app support
-- [ ] Integration with external ERP systems
+- [ ] Integration with external laboratory systems
 - [ ] Machine learning for quality prediction
-- [ ] IoT sensor integration
+- [ ] IoT sensor integration for environmental monitoring
 
 ---
 
-**XooHooX** - Transforming juice production through intelligent management 🍊
+**XooHooX** - Transforming Australian research through intelligent laboratory management 🧪🇦🇺

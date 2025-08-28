@@ -10,7 +10,7 @@ from app.core import security
 from app.core.config import settings
 from app.db.database import SessionLocal
 
-oauth2_scheme = OAuth2PasswordBearer(tokenUrl="token")
+oauth2_scheme = OAuth2PasswordBearer(tokenUrl="token", auto_error=False)
 
 def get_db() -> Generator:
     """
@@ -26,7 +26,10 @@ def get_current_user(token: str = Depends(oauth2_scheme)) -> str:
     """
     Get current user from token.
     """
-    # For now, just return a dummy user
+    # For development, just return a dummy user if no token provided
+    if not token:
+        return "testuser"
+    # In production, you would validate the token here
     return "testuser"
 
 def get_current_active_user(
